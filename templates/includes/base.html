@@ -1,0 +1,217 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>{% block title %}Snox | Dashboard{% endblock %}</title>
+    <link rel="icon" type="image/png" href=" {% static 'img/fav.png' %}"/>
+
+    <!-- Google Tag Manager -->
+    <script>
+        ;
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            })
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : ''
+            j.async = true
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
+            f.parentNode.insertBefore(j, f)
+        })(window, document, 'script', 'dataLayer', 'GTM-KQHJPZP')
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:600,700,800,900" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/fontisto@v3.0.4/css/fontisto/fontisto-brands.min.css" rel="stylesheet"/>
+    <link href="https://unpkg.com/css.gg/icons/icons.css" rel="stylesheet"/>
+
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/app.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/core.css' %}"/>
+
+    <!-- View Js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.1/feather.min.js"
+            integrity="sha512-4lykFR6C2W55I60sYddEGjieC2fU79R7GUtaqr3DzmNbo0vSaO1MfUjMoTFYYuedjfEix6uV9jVTtRCSBU/Xiw==" crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQHJPZP" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- Pageloader -->
+{% block preloader %}
+    <div class="pageloader"></div>
+    <div class="infraloader is-active"></div>
+{% endblock %}
+
+<div class="app-overlay is-sidebar-v1"></div>
+
+<div class="sidebar-v1 is-fold">
+    <div class="top-section">
+        <button id="sidebar-v1-close" class="close-button">
+            <i data-feather="arrow-left"></i>
+        </button>
+
+
+        <div class="user-block">
+            <img class="" src="{% static 'img/logo.png' %}" data-demo-src="{% static 'img/logo.png' %}" alt="" style="max-width:150px"/>
+            <div class="meta mt-3">
+                {% if user.is_authenticated %}
+                    <span>{{ user.get_full_name }}</span>
+                    <span>{{ user.userprofile.designation.name }}</span>
+                {% else %}
+                    <span>Welcome</span>
+                    <span>Welcome, guest!</span>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+    <div class="bottom-section">
+        <ul>
+            <li>
+                <a href="{% url 'dashboard' %}">
+                    <i data-feather="pie-chart"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'list_events' %}">
+                    <i data-feather="list"></i>
+                    <span>Events</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'coming_soon' %}">
+                    <i data-feather="paperclip"></i>
+                    <span>Digital Invitations</span>
+                </a>
+            </li>
+
+        </ul>
+        <ul>
+            <li>
+                <a href="{% url 'coming_soon' %}">
+                    <i data-feather="settings"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'logout' %}">
+                    <i data-feather="log-out"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="view-wrapper is-sidebar-v1 is-fold">
+
+
+    <!-- Container -->
+    <div id="posts-feed" class="container" data-open-sidebar data-page-title="Dashboard">
+        <div class="toolbar-v1 is-narrow">
+            <!-- Sidebar Trigger -->
+            <div class="friendkit-hamburger sidebar-v1-trigger">
+                    <span class="menu-toggle has-chevron">
+                        <span class="icon-box-toggle">
+                            <span class="rotate">
+                                <i class="icon-line-top"></i>
+                                <i class="icon-line-center"></i>
+                                <i class="icon-line-bottom"></i>
+                            </span>
+                        </span>
+                    </span>
+            </div>
+            <h1>Dashboard</h1>
+            <div class="controls">
+
+
+                <div id="account-dropdown" class="navbar-item is-account drop-trigger has-caret">
+                    <div class="user-image">
+                        {% if user.is_authenticated %}
+                            <img src="{{ user.userprofile.profile_picture.url }}" data-demo-src="{{ user.userprofile.profile_picture.url }}" alt="{{ user.first_name }}"/>
+                        {% else %}
+                            <img src="https://placehold.co/400x400" data-demo-src="https://placehold.co/400x400" alt=""/>
+                        {% endif %}
+                        <span class="indicator"></span>
+                    </div>
+
+                    <div class="nav-drop is-account-dropdown">
+                        <div class="inner">
+                            <div class="nav-drop-header">
+                                {% if user.is_authenticated %}
+                                    <span class="username">{{ user.get_full_name }}</span>
+                                {% else %}
+                                    <span>Guest</span>
+                                {% endif %}
+                            </div>
+
+
+                            <div class="nav-drop-body account-items">
+
+
+                                <hr class="account-divider"/>
+                                <a href="#" class="account-item">
+                                    <div class="media">
+                                        <div class="icon-wrap">
+                                            <i data-feather="settings"></i>
+                                        </div>
+                                        <div class="media-content">
+                                            <h3>Settings</h3>
+                                            <small>Access widget settings.</small>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <a class="account-item">
+                                    <div class="media">
+                                        <div class="icon-wrap">
+                                            <i data-feather="power"></i>
+                                        </div>
+                                        <div class="media-content">
+                                            <h3>Log out</h3>
+                                            <small>Log out from your account.</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ------------------ content start -------------------------->
+        {% block content %}Snox | Dashboard {% endblock %}
+        <!-- ------------------ content end -------------------------->
+
+
+    </div>
+
+    <!-------- Footer ----------------->
+    {% include 'includes/footer.html' %}
+
+
+</div>
+</body>
+</html>

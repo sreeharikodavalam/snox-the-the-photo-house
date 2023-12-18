@@ -1,0 +1,27 @@
+<div class="column is-4">
+    <article class="group-box">
+
+        <div class="box-img has-background-image" data-background="{{ event.cover_image.url }}" data-demo-background="{{ event.cover_image.url }}"></div>
+        <a href="#" class="box-link">
+            <div class="box-img--hover has-background-image" data-background="{{ event.cover_image.url }}" data-demo-background="{{ event.cover_image.url }}"></div>
+        </a>
+        <div class="box-info">
+            <h3 class="box-title">{{ event.title }}</h3>
+            <span class="box-category">{{ event.event_type.event_type_name }} | {{ event.date }}</span>
+            <span class="box-members mt-3   ">
+                        <div class="members-preview">
+                            <a class="button is-solid is-raised has-icon" href="{% url 'list_gallery' event_id=event.pk %}">
+                                <i data-feather="image"></i>
+                                <span>Gallery</span>
+                            </a>
+                        </div>
+                        <div class="members-preview">
+                            <a class="button is-solid is-raised has-icon" href="{% url 'edit_event' event_id=event.pk %}">
+                                <i data-feather="edit-2"></i>
+                                <span>Manage</span>
+                            </a>
+                        </div>
+                    </span>
+        </div>
+    </article>
+</div>

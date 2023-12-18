@@ -1,0 +1,28 @@
+{% extends 'includes/base.html' %}
+{% load event_card_tag %}
+
+{% block title %}Snox | Dashboard 2{% endblock %}
+
+{% block content %}
+    <div class="groups-grid">
+
+        <div class="dashboard-toolbar">
+            <h1 class="title is-3">Events Manager</h1>
+            <div class="actions">
+                <div class="buttons">
+                    <a class="button is-solid primary-button is-raised has-icon" href="{% url 'create_event' %}">
+                        <i data-feather="plus"></i>
+                        <span>Create Event</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="columns is-multiline mt-4">
+            {% for event in events %}
+                {% render_event_card event %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'includes/base.html' %}
+
+{% block title %}Snox | Dashboard{% endblock %}
+
+{% block content %}
+
+    <div class="groups-grid">
+
+
+        <div class="dashboard-toolbar">
+            <h2 class="title is-3">{{ gallery.event.title }}</h2>
+            <div class="actions">
+                <div class="buttons">
+                    <a class="button is-solid primary-button is-raised has-icon" href="{% url 'upload_gallery_image' gallery_id=gallery.pk %}">
+                        <i data-feather=" plus"></i>
+                        <span>Upload Images</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <h1 class="subtitle is-4">Gallery | {{ gallery.name }}</h1>
+        <div class="columns is-multiline mt-4">
+            {% for image in gallery_images %}
+                <div class="column is-4">
+                    <div class="card post-feed-item">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <a href="{{ image.album_cover.url }}" data-demo-href="{{ image.album_cover.url }}" data-fancybox data-caption="">
+                                    <img src="{{ image.album_cover.url }}" data-demo-src="{{ image.album_cover.url }}" alt=""/>
+                                </a>
+                            </figure>
+                        </div>
+{#                        <div class="card-content">#}
+{#                            <div class="media">#}
+{#                                    {% for face in image.get_faces %}#}
+{#                                            <img src="{{ face.image.url }}"  width="25" height="25"  alt="">#}
+{#                                    {% endfor %}#}
+{#                            </div>#}
+{#                        </div>#}
+                    </div>
+                </div>
+
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,293 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+
+    <title>Snox | Get your photos from the event</title>
+    <link rel="icon" type="image/png" href="img/fav.png"/>
+
+    <!-- Google Tag Manager -->
+    <script>
+        ;
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            })
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : ''
+            j.async = true
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
+            f.parentNode.insertBefore(j, f)
+        })(window, document, 'script', 'dataLayer', 'GTM-KQHJPZP')
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:600,700,800,900" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Galada&display=swap" rel="stylesheet">
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/app.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/core.css' %}"/>
+</head>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQHJPZP" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+<style>
+    .wed {
+        font-family: 'Galada', cursive;
+    }
+
+    .etitle {
+        font-size: 40px;
+        margin: 10px auto;
+        color: #e65f58
+    }
+
+    .lsubtitle {
+        font-size: 14.4px;
+        color: #9a9ba3;
+    }
+
+    .and {
+        color: #949494;
+        font-size: 60px
+    }
+
+    .agree {
+        color: #A2A5B9;
+    }
+
+    .selfieprev {
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        min-height: 350px;
+    }
+</style>
+
+<!-- Pageloader -->
+<div class="pageloader"></div>
+<div class="infraloader is-active"></div>
+
+
+<div class="login-wrapper">
+
+    <div class="fake-nav">
+        <img src="{% static '/img/logo.png' %}" style="width:120px"/>
+    </div>
+
+    <!-- Main Wrapper -->
+    <div class="login-wrapper columns is-gapless">
+
+        <!--Right Side-->
+        <div class="column is-12">
+            <div class="hero form-hero">
+
+                <div class="hero-body">
+                    <div class="form-wrapper">
+
+                        <div class="has-text-centered"><img src="{% static 'img/wedding.svg' %}" style="max-width: 80px;margin:auto"></div>
+                        <h1 class="etitle wed has-text-centered">{{ event.groom_name }}
+                            <sapn class="and">&</sapn>
+                            {{ event.bride_name }}</h1>
+                        <h1 class="is-size-5 has-text-centered is-bold">Get all your photos from the event</h1>
+                        <h3 class="lsubtitle has-text-centered mt-3">
+                            Capture your selfie in our system, and we'll make sure you get every photo of yourself. Our AI and Face Recognition technology make it happen!
+                        </h3>
+                        <form method="post" enctype="multipart/form-data" action="{% url 'selfie_register' event_id=event.pk %}" id="selfieForm">
+                            {% csrf_token %}
+                            <input type="file" hidden id="selfieImage">
+                            <input type="hidden" name="selfie" id="captured-selfie"/>
+
+                            <div class="login-form mt-4">
+                                <div class="field">
+                                    <div class="control">
+                                        {{ form.user_name|add_class:"input email-input py-5"|attr:"placeholder:Your Name"|attr:'id=inputName' }}
+                                        <div class="input-icon py-5">
+                                            <i class="fa fa-user"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <div class="control">
+                                        {{ form.email_id|add_class:"input email-input py-5"|attr:"placeholder:Your Email id" }}
+                                        <div class="input-icon py-5">
+                                            <i class="fa fa-envelope"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="field mb-5">
+                                    <div class="control">
+                                        {{ form.mobile_number|add_class:"input email-input py-5"|attr:"placeholder:Your WhatsApp Number"|attr:'id=inputNumber' }}
+                                        <div class="input-icon py-5">
+                                            <i class="fa fa-whatsapp"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="field mt-3 px-2">
+                                    <div class="control">
+                                        <label class="checkbox">
+                                            <input type="checkbox" id="agreeCheckbox">
+                                            I agree to the <a href="#">Terms of Service</a>. Learn about how we use and protect your data in our <a href="#">Privacy Policy</a>.
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                                <div class="has-text-centered is-centered mt-5">
+                                    <a class="button is-medium is-bold" id="openmodal">
+                                        <i class="fa fa-camera"></i> &nbsp;
+                                        Upload Selfie
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="section forgot-password">
+                                <div class="has-text-centered lsubtitle">
+                                    By clicking submit, you give us permission to use AI facial recognition to securely deliver event photos directly to you.
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="modal" id="selfiemodal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Capture your selfie</p>
+            <button id="closemodal" class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="notification is-danger is-light" id="nocamera" style="display:none">
+                Please allow video permissions to capture your selfie.
+            </div>
+
+            <video id="video-preview" class="selfieprev" autoplay></video>
+        </section>
+        <footer class="modal-card-foot">
+            <button id="capture-button" class="button is-solid primary-button is-medium is-fullwidth has-icon">
+                <i class="fa fa-camera"></i> &nbsp; Capture Selfie
+            </button>
+            <!--button class="button">Cancel</button-->
+        </footer>
+    </div>
+</div>
+
+<img id="capturedImage" style="display: none;" />
+<div id="image-container"></div>
+
+
+<!-------- Footer ----------------->
+{% include 'includes/footer.html' %}
+<script>
+    document.getElementById("openmodal").addEventListener("click", openModal, false);
+    document.getElementById("closemodal").addEventListener("click", closeModal, false);
+
+    function openModal() {
+        const name = document.getElementById('inputName').value;
+        const number = document.getElementById('inputNumber').value;
+        var checkbox = document.getElementById('agreeCheckbox').checked;
+
+        if (name.trim().length < 2) {
+            alert("Please enter your name.");
+            return;
+        }
+        if (number.trim().length !== 10) {
+            alert("Please enter your 10-digit mobile number.");
+            return;
+        }
+        if (!checkbox) {
+            alert("Please agree to our terms and conditions.");
+            return;
+        }
+
+        document.getElementById("selfiemodal").classList.add("is-active");
+
+        // Get access to the camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                var video = document.getElementById('video-preview');
+                video.srcObject = stream;
+                videoStream = stream;
+
+                // Capture selfie when the button is clicked
+                document.getElementById('capture-button').addEventListener('click', function () {
+                    var canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                    // Create an img element to store the captured image
+                    var capturedImage = document.createElement('img');
+                    capturedImage.src = canvas.toDataURL('image/jpeg');
+                    capturedImage.style.display = 'block';
+
+                    // Append the img element to a container or body
+                    document.getElementById('image-container').appendChild(capturedImage);
+
+                    // Set the captured image data to the hidden input
+                    document.getElementById('captured-selfie').value = capturedImage.src;
+
+                    // Close the modal and stop the camera
+                    closeModal();
+
+                    // Submit the form
+                    submitForm();
+                });
+            })
+            .catch(function (error) {
+                document.getElementById("nocamera").style.display = "block";
+            });
+    }
+
+    function submitForm() {
+        var form = document.getElementById('selfieForm');
+        form.submit();
+    }
+
+    function closeModal() {
+        document.getElementById("selfiemodal").classList.remove("is-active");
+        stopCamera();
+    }
+
+    function stopCamera() {
+        if (videoStream) {
+            var tracks = videoStream.getTracks();
+            tracks.forEach(function (track) {
+                track.stop();
+            });
+        }
+    }
+</script>
+
+
+
+</body>
+
+</html>

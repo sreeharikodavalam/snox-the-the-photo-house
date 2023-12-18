@@ -1,0 +1,66 @@
+{% extends 'includes/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Snox | Dashboard 2{% endblock %}
+
+{% block preloader %}{% endblock %}
+
+{% block content %}
+    <div class="settings-wrapper">
+        <!-- /partials/settings/sections/general-settings.html -->
+        <div id="general-settings" class="settings-section is-active">
+            <div class="settings-panel">
+                    <h2>{{ event.title }}</h2>
+                    <h3>Create Gallery</h3>
+                <div class="settings-form-wrapper">
+                    <div class="settings-form">
+                        <form method="post" enctype="multipart/form-data" action="{% url 'create_gallery' event_id=event.pk %}">
+                            {% csrf_token %}
+                            <div class="columns is-multiline">
+
+                                <div class="column is-12">
+                                    <!--Field-->
+                                    <div class="field field-group">
+                                        <label>Gallery Name</label>
+                                        <div class="control has-icon">
+                                            <label>
+                                                <input type="text" class="input is-fade" name="gallery_name" value="{{ name }}">
+                                            </label>
+                                            <div class="form-icon">
+                                                <i data-feather="image"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="column is-12">
+                                    <div class="buttons">
+                                        <button type="submit" class="button is-solid accent-button form-button">
+                                            Create New Gallery
+                                        </button>
+                                        <a class="button is-light form-button" href="{% url 'list_events' %}">Cancel</a>
+                                    </div>
+                                </div>
+
+                                {% if error_message %}
+                                    <p class="help is-danger">* {{ error_message }}</p>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="illustration">
+                        <img class="light-image" src="{% static 'assets/img/illustrations/settings/1.svg' %}" alt=""/>
+                        <img class="dark-image" src="{% static 'assets/img/illustrations/settings/1-dark.svg' %}" alt=""/>
+                        <p>
+                            If you'd like to learn more about creating and managing different events and galleries? read our <a>user guide</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,3 @@
+INFOBIP_BASE_URL = "https://1vpgmn.api.infobip.com"
+INFOBIP_API_KEY = "App 5a75c89c9ef36a6d74b871fd431b3c89-22bf5269-41f9-4c31-9a72-96c6cb5ae7dd    "
+INFOBIP_SENDER = "919747071877"

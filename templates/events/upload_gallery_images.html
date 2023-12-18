@@ -1,0 +1,66 @@
+{% extends 'includes/base.html' %}
+
+{% block title %}Snox | Dashboard{% endblock %}
+
+{% block content %}
+
+    <div class="groups-grid">
+
+        <div class="dashboard-container">
+            <h2 class="title is-3">{{ gallery.event.title }}</h2>
+            <h1 class="subtitle is-4">Gallery | {{ gallery.name }}</h1>
+        </div>
+
+        <div class="section">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
+            <form action="{% url 'upload_gallery_image_process' gallery_id=gallery.pk %}" class="dropzone" id="myDropzone"></form>
+            <script>
+                let dropzoneInstance;
+                Dropzone.options.myDropzone = {
+
+                    maxFilesize: 100, // Maximum file size in MB
+                    acceptedFiles: 'image/*',
+
+                    resizeMethod: 'contain',
+                    init: function () {
+                        var uploadedFilenames = [];
+                        dropzoneInstance = this; // Store a reference to the Dropzone instance
+
+                        this.on("addedfile", function (file) {
+                            if (file.type.match(/image.*/)) {
+                                var reader = new FileReader();
+                                reader.onload = function (event) {
+                                    var img = new Image();
+                                    img.src = event.target.result;
+                                    img.onload = function () {
+                                        // Remove the resizeImage function call
+                                    };
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        });
+
+                        this.on("thumbnail", function (file) {
+                            // Check if the file with the same name already exists
+                            if (uploadedFilenames.includes(file.name)) {
+                                this.removeFile(file);
+                                alert("File with the same name already uploaded. Please choose a different file.");
+                            } else {
+                                // Add the filename to the list
+                                uploadedFilenames.push(file.name);
+                            }
+                        });
+
+                        // Add a complete event to handle successful uploads
+                        this.on("complete", function (file) {
+                            // Update the uploadedFilenames array after a successful upload
+                            uploadedFilenames.push(file.name);
+                        });
+                    }
+                };
+            </script>
+
+
+        </div>
+    </div>
+{% endblock %}

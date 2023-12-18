@@ -1,0 +1,138 @@
+{% extends 'includes/base.html' %}
+{% load event_card_tag %}
+{% load static %}
+
+{% block title %}Snox | Dashboard 2{% endblock %}
+
+{% block content %}
+    <!--Groups-->
+    <div class="groups-grid">
+
+
+        <!--Friends grid-->
+        <div class="friends-grid">
+            <div class="columns is-multiline">
+                <!--dash item-->
+                <div class="column is-3">
+                    <a class="friend-item has-text-centered">
+                        <div class="avatar-wrap">
+                            <img src="{% static 'img/event.svg' %}" data-demo-src="{% static 'img/event.svg' %}" alt=""/>
+                        </div>
+                        <h3 class="is-size-4">0</h3>
+                        <h2>Total Events</h2>
+                    </a>
+                </div>
+
+                <!--dash item-->
+                <div class="column is-3">
+                    <a class="friend-item has-text-centered">
+                        <div class="avatar-wrap">
+                            <img src="{% static '' %}img/album.svg" data-demo-src="{% static '' %}img/album.svg" alt=""/>
+                        </div>
+                        <h3 class="is-size-4">0</h3>
+                        <h2>Total Albums</h2>
+                    </a>
+                </div>
+
+                <!--dash item-->
+                <div class="column is-3">
+                    <a class="friend-item has-text-centered">
+                        <div class="avatar-wrap">
+                            <img src="{% static '' %}img/digin.svg" data-demo-src="{% static '' %}img/digin.svg" alt=""/>
+                        </div>
+                        <h3 class="is-size-4">0</h3>
+                        <h2>Digital Invitations</h2>
+                    </a>
+                </div>
+
+                <!--dash item-->
+                <div class="column is-3">
+                    <a class="friend-item has-text-centered">
+                        <div class="avatar-wrap">
+                            <img src="{% static '' %}img/photodist.svg" data-demo-src="{% static '' %}img/photodist.svg" alt=""/>
+                        </div>
+                        <h3 class="is-size-4">0</h3>
+                        <h2>Photos Distributed</h2>
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="dashboard-toolbar mt-5">
+            <h1 class="title is-3">Recent Events</h1>
+            <div class="actions">
+
+                <div class="buttons">
+                    <a class="button is-solid primary-button is-raised has-icon" href="{% url 'create_event' %}">
+                        <i data-feather="plus"></i>
+                        <span>Create Event</span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="columns is-multiline mt-4 mb-4">
+
+            {% for event in events %}
+                {% render_event_card event %}
+            {% endfor %}
+
+        </div>
+
+
+        <div class="dashboard-toolbar" style="margin-top:50px">
+            <h1 class="title is-3">Recent Digital Invitations (Coming Soon)</h1>
+            <div class="actions">
+
+                <div class="buttons">
+                    <a class="button is-solid primary-button is-raised has-icon">
+                        <i data-feather="plus"></i>
+                        <span>Create Invitation</span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="placeload list-placeload">
+            <div class="header">
+                <div class="content-shape loads"></div>
+            </div>
+            <div class="body">
+                <div class="flex-block">
+                    <div class="img loads"></div>
+                    <div class="inner-wrap">
+                        <div class="content-shape loads"></div>
+                        <div class="content-shape loads"></div>
+                    </div>
+                </div>
+                <div class="flex-block">
+                    <div class="img loads"></div>
+                    <div class="inner-wrap">
+                        <div class="content-shape loads"></div>
+                        <div class="content-shape loads"></div>
+                    </div>
+                </div>
+                <div class="flex-block">
+                    <div class="img loads"></div>
+                    <div class="inner-wrap">
+                        <div class="content-shape loads"></div>
+                        <div class="content-shape loads"></div>
+                    </div>
+                </div>
+                <div class="flex-block">
+                    <div class="img loads"></div>
+                    <div class="inner-wrap">
+                        <div class="content-shape loads"></div>
+                        <div class="content-shape loads"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

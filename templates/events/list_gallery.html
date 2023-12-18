@@ -1,0 +1,37 @@
+{% extends 'includes/base.html' %}
+
+{% block title %}Snox | Dashboard{% endblock %}
+
+{% block content %}
+    <div class="groups-grid">
+
+        <div class="dashboard-toolbar">
+            <h1 class="title is-3">Gallery</h1>
+            <div class="actions">
+                <div class="buttons">
+                    {% if event %}
+                        <a class="button is-solid primary-button is-raised has-icon" href="{% url 'create_gallery' event_id=event.id %}">
+                            <i data-feather=" plus"></i>
+                            <span>Create Gallery</span>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="columns is-multiline mt-4">
+            {% for gallery in galleries %}
+                <div class="column is-4">
+                    <article class="group-box">
+                        <a href="{% url 'list_gallery_images' gallery_id=gallery.pk %}">
+                            <div class="box-info">
+                                <h3 class="box-title">{{ gallery.name }}</h3>
+                            </div>
+                        </a>
+                    </article>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

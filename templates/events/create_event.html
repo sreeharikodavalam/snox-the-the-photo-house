@@ -1,0 +1,118 @@
+{% extends 'includes/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Snox | Dashboard 2{% endblock %}
+
+{% block preloader %}{% endblock %}
+
+{% block content %}
+    <div class="settings-wrapper">
+        <!-- /partials/settings/sections/general-settings.html -->
+        <div id="general-settings" class="settings-section is-active">
+            <div class="settings-panel">
+                <div class="title-wrap">
+                    <a class="mobile-sidebar-trigger">
+                        <i data-feather="menu"></i>
+                    </a>
+                    <h2>Create Wedding Event</h2>
+                </div>
+                <div class="settings-form-wrapper">
+                    <div class="settings-form">
+                        <form method="post" enctype="multipart/form-data" action="{% url 'create_event' %}">
+                            {% csrf_token %}
+                            <div class="columns is-multiline">
+                                <div class="column is-6">
+                                    <!--Field-->
+                                    <div class="field field-group">
+                                        <label>Bride's Name</label>
+                                        <div class="control has-icon">
+                                            {{ form.bride_name|add_class:"input"|attr:"placeholder:Bride's Name" }}
+                                            <div class="form-icon">
+                                                <i data-feather="user"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field field-group">
+                                        <label>Groom's Name</label>
+                                        <div class="control has-icon">
+                                            {{ form.groom_name|add_class:"input"|attr:"placeholder:Groom's Name" }}
+                                            <div class="form-icon">
+                                                <i data-feather="user"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="column is-6">
+                                    <!--Field-->
+                                    <div class="field field-group">
+                                        <label>Event Date</label>
+                                        <div class="control has-icon">
+                                            <input type="date" class="input is-fade" name="{{ form.date.name }}" value="{{ form.date.value|default:'' }}">
+                                            <div class="form-icon">
+                                                <i data-feather="calendar"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Field-->
+                                    <div class="field field-group">
+                                        <label>Venue</label>
+                                        <div class="control has-icon">
+                                            {{ form.venue|add_class:"input"|attr:"placeholder:Venue" }}
+                                            <div class="form-icon">
+                                                <i data-feather="aperture"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="column is-12">
+                                    <!--Field-->
+                                    <div class="field field-group">
+                                        <label>Cover Image</label>
+                                        <div class="control">
+                                            {{ form.cover_image|add_class:"input"|attr:"placeholder:Select a cover pic..."}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column is-12">
+                                    <!--Field-->
+                                    <div class="field field-group">
+                                        <label>Note</label>
+                                        <div class="control">
+                                            {{ form.note|add_class:"textarea is-fade"|attr:"placeholder:Fill in your notes..."|attr:"rows=1" }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="column is-12">
+                                    <div class="buttons">
+                                        <button type="submit" class="button is-solid accent-button form-button">
+                                            Create New Event
+                                        </button>
+                                        <a class="button is-light form-button" href="{% url 'list_events' %}">Cancel</a>
+                                    </div>
+                                </div>
+
+                                {% if form.errors    %}
+                                    <p class="help is-danger">* Please ensure that all details are entered correctly.</p>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="illustration">
+                        <img class="light-image" src="{% static 'assets/img/illustrations/settings/1.svg' %}" alt=""/>
+                        <img class="dark-image" src="{% static 'assets/img/illustrations/settings/1-dark.svg' %}" alt=""/>
+                        <p>
+                            If you'd like to learn more about creating and managing different events? read our <a>user guide</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
