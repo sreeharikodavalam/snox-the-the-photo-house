@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
-    'app',
+    'app.apps.AppConfig',
     'authentication',
     'events',
     'whatsapp'
