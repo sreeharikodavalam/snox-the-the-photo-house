@@ -5,14 +5,15 @@
 {% block content %}
     <div class="groups-grid">
 
+        <h3 class="title is-4">Gallery List</h3>
         <div class="dashboard-toolbar">
-            <h1 class="title is-3">Gallery</h1>
+            <h3 class="title is-3">{{ event.title }}</h3>
             <div class="actions">
                 <div class="buttons">
                     {% if event %}
                         <a class="button is-solid primary-button is-raised has-icon" href="{% url 'create_gallery' event_id=event.id %}">
                             <i data-feather=" plus"></i>
-                            <span>Create Gallery</span>
+                            <span>Create New Gallery</span>
                         </a>
                     {% endif %}
                 </div>

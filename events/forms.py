@@ -9,11 +9,11 @@ from .models import Event, UserSelfieRegistration
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['bride_name', 'groom_name', 'date', 'venue', 'note', 'cover_image']
+        fields = ['bride_name', 'groom_name', 'date', 'venue', 'note', 'cover_image', 'user']
 
     def __init__(self, *args, **kwargs):
-        super(EventForm, self).__init__(*args, **kwargs)
-        # Add custom attributes or modify the form fields if needed
+        super().__init__(*args, **kwargs)
+        self.fields['user'].required = False
 
     def clean_date(self):
         date = self.cleaned_data['date']
@@ -31,4 +31,3 @@ class UserSelfieRegistrationForm(forms.ModelForm):
         super(UserSelfieRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['selfie_image'].required = False
         self.fields['selfie_embedding'].required = False
-

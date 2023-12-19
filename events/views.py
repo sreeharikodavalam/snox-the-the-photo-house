@@ -20,12 +20,15 @@ def create_event(request):
     if request.method == 'POST':
         form = EventForm(request.POST, request.FILES)
         if form.is_valid():
-            # Save the form data to create a new event
-            event = form.save()
-            return redirect('event_detail', pk=event.pk)
+            # Assign the logged-in user if not provided in the form
+            if 'user' not in form.cleaned_data or not form.cleaned_data['user']:
+                form.instance.user = request.user
+                event = form.save()
+                return redirect('list_gallery', event_id=event.pk)
+            else:
+                redirect('login')
     else:
         form = EventForm()
-
     return render(request, 'events/create_event.html', {'form': form})
 
 
@@ -52,14 +55,14 @@ def list_events(request):
 
 @login_required
 def list_galleries(request, event_id=None):
-    event = get_object_or_404(Event, pk=event_id)
+    event = get_object_or_404(Event, pk=event_id, user=request.user)
     galleries = Gallery.objects.filter(event=event_id)
     return render(request, 'events/list_gallery.html', {'galleries': galleries, 'event': event})
 
 
 @login_required
 def create_gallery(request, event_id=None):
-    event = get_object_or_404(Event, pk=event_id)
+    event = get_object_or_404(Event, pk=event_id, user=request.user)
     error_message = ''
     name = ''
     if request.method == 'POST':
@@ -67,11 +70,8 @@ def create_gallery(request, event_id=None):
         if name is not None and len(name) > 4:
             gallery_exists = Gallery.objects.filter(event=event_id, name=name).exists()
             if not gallery_exists:
-                new_gallery = Gallery(
-                    name=name,
-                    event=event
-                ).save()
-                return redirect('list_events')
+                new_gallery = Gallery.objects.create(name=name, event=event)
+                return redirect('list_gallery_images', gallery_id=new_gallery.pk)
             else:
                 error_message = f"Gallery {name} already exist in this event"
         else:

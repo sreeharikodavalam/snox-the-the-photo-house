@@ -26,7 +26,7 @@ def match_selfies(user_selfie_id):
         face_embeddings = parse_face_encodings(face.face_embedding)
         match_result = match_face_encodings(known_face_encoding_np, face_embeddings)
         if match_result:
-            result.append(face.album)
+            result.append(face.gallery_image)
     return result
 
 

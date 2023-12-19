@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import WhatsappLogSharedPhotos, WhatsappLogWelcomeMessages
+from .models import WhatsappLogSharedPhoto, WhatsappLogWelcomeMessage
 
 
-admin.site.register(WhatsappLogSharedPhotos)
-admin.site.register(WhatsappLogWelcomeMessages)
+admin.site.register(WhatsappLogSharedPhoto)
+admin.site.register(WhatsappLogWelcomeMessage)

@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 {% load static %}
 
-{% block title %}Snox | Dashboard 2{% endblock %}
+{% block title %}Snox | The Photo House{% endblock %}
 
 {% block preloader %}{% endblock %}
 
@@ -72,7 +72,7 @@
                                     <div class="field field-group">
                                         <label>Cover Image</label>
                                         <div class="control">
-                                            {{ form.cover_image|add_class:"input"|attr:"placeholder:Select a cover pic..."}}
+                                            {{ form.cover_image|add_class:"input"|attr:"placeholder:Select a cover pic..." }}
                                         </div>
                                     </div>
                                 </div>
@@ -94,10 +94,19 @@
                                         <a class="button is-light form-button" href="{% url 'list_events' %}">Cancel</a>
                                     </div>
                                 </div>
-
-                                {% if form.errors    %}
+                                <div class="errors">
+                                {% if form.errors %}
                                     <p class="help is-danger">* Please ensure that all details are entered correctly.</p>
+
+                                    {% if form.date.errors %}
+                                        <p class="help is-danger">* Please ensure you have selected valid date for this event.</p>
+                                    {% endif %}
+
+                                    {% if form.cover_image.errors %}
+                                        <p class="help is-danger">* Please select a cover image for this event.</p>
+                                    {% endif %}
                                 {% endif %}
+                                </div>
                             </div>
                         </form>
                     </div>

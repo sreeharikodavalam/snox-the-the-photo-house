@@ -1,14 +1,27 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
-class EventTypes(models.Model):
+class EventType(models.Model):
     event_type_name = models.CharField(max_length=64)
     separation = models.CharField(max_length=6)
     names_count = models.SmallIntegerField()
 
+    class Meta:
+        db_table = 'event_type'
+
+    def __str__(self):
+        return self.event_type_name
+
+
+# class EventNames(models.Model):
+#     event = models.OneToOneField(Event, on_delete=models.CASCADE)
+#     name = models.CharField(max_length=64)
+
 
 class Event(models.Model):
-    event_type = models.OneToOneField(EventTypes, on_delete=models.CASCADE, default=1)
+    event_type = models.ForeignKey(EventType, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, default=1, null=True)
     bride_name = models.CharField(max_length=64, default='')
     groom_name = models.CharField(max_length=64, default='')
     date = models.DateField(default=None)
@@ -22,10 +35,8 @@ class Event(models.Model):
     def __str__(self):
         return self.title()
 
-
-# class EventNames(models.Model):
-#     event = models.OneToOneField(Event, on_delete=models.CASCADE)
-#     name = models.CharField(max_length=64)
+    class Meta:
+        db_table = 'event_master'
 
 
 class Gallery(models.Model):
@@ -34,6 +45,9 @@ class Gallery(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        db_table = 'event_gallery'
 
 
 class GalleryImage(models.Model):
@@ -46,17 +60,29 @@ class GalleryImage(models.Model):
     def get_faces(self):
         return CroppedGalleryFace.objects.filter(album=self.pk)
 
+    class Meta:
+        db_table = 'event_gallery_image'
+
 
 class CroppedGalleryFace(models.Model):
-    album = models.ForeignKey(GalleryImage, on_delete=models.CASCADE)
+    gallery_image = models.ForeignKey(GalleryImage, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='events/gallery/faces/')
     face_locations = models.JSONField(default=None, blank=True, null=True)
     face_embedding = models.JSONField(default=None, blank=True, null=True)
+    parent_face = models.ForeignKey('CroppedGalleryFace', on_delete=models.CASCADE, blank=True, null=True)
+
+    class Meta:
+        db_table = 'event_gallery_image_face'
 
 
 class UserSelfieRegistration(models.Model):
+    # event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user_name = models.CharField(max_length=128)
     mobile_number = models.CharField(max_length=24)
     email_id = models.CharField(max_length=256, default=None, blank=True, null=True)
     selfie_image = models.ImageField(upload_to='user_selfies')
     selfie_embedding = models.JSONField(default=None, blank=True, null=True)
+    last_matching = models.DateTimeField()
+
+    class Meta:
+        db_table = 'event_user_selfie_registration'

@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from app.models import FaceDetectionJobs
+from app.models import FaceDetectionJob
 
-admin.site.register(FaceDetectionJobs)
+admin.site.register(FaceDetectionJob)

@@ -2,7 +2,7 @@
 {% load event_card_tag %}
 {% load static %}
 
-{% block title %}Snox | Dashboard 2{% endblock %}
+{% block title %}Snox | The Photo House{% endblock %}
 
 {% block content %}
     <!--Groups-->
@@ -15,22 +15,22 @@
                 <!--dash item-->
                 <div class="column is-3">
                     <a class="friend-item has-text-centered">
-                        <div class="avatar-wrap">
+                        <div class="avatar-wrap p-4">
                             <img src="{% static 'img/event.svg' %}" data-demo-src="{% static 'img/event.svg' %}" alt=""/>
                         </div>
-                        <h3 class="is-size-4">0</h3>
-                        <h2>Total Events</h2>
+                        <h3 class="is-size-4">{{ report.event_count }}</h3>
+                        <h2>Events Created</h2>
                     </a>
                 </div>
 
                 <!--dash item-->
                 <div class="column is-3">
                     <a class="friend-item has-text-centered">
-                        <div class="avatar-wrap">
+                        <div class="avatar-wrap p-4">
                             <img src="{% static '' %}img/album.svg" data-demo-src="{% static '' %}img/album.svg" alt=""/>
                         </div>
-                        <h3 class="is-size-4">0</h3>
-                        <h2>Total Albums</h2>
+                        <h3 class="is-size-4">{{ report.gallery_count }}</h3>
+                        <h2>Event Galleries</h2>
                     </a>
                 </div>
 
@@ -38,25 +38,23 @@
                 <div class="column is-3">
                     <a class="friend-item has-text-centered">
                         <div class="avatar-wrap">
-                            <img src="{% static '' %}img/digin.svg" data-demo-src="{% static '' %}img/digin.svg" alt=""/>
+                            <img src="{% static 'img/camera.svg' %}" data-demo-src="{% static 'img/camera.svg' %}" alt=""/>
                         </div>
-                        <h3 class="is-size-4">0</h3>
-                        <h2>Digital Invitations</h2>
+                        <h3 class="is-size-4">{{ report.image_count }}</h3>
+                        <h2>Images Uploaded</h2>
                     </a>
                 </div>
 
                 <!--dash item-->
                 <div class="column is-3">
                     <a class="friend-item has-text-centered">
-                        <div class="avatar-wrap">
-                            <img src="{% static '' %}img/photodist.svg" data-demo-src="{% static '' %}img/photodist.svg" alt=""/>
+                        <div class="avatar-wrap p-4">
+                            <img src="{% static 'img/whatsapp.svg' %}" data-demo-src="{% static 'img/whatsapp.svg' %}" alt=""/>
                         </div>
                         <h3 class="is-size-4">0</h3>
                         <h2>Photos Distributed</h2>
                     </a>
                 </div>
-
-
             </div>
         </div>
 

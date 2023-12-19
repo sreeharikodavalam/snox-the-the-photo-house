@@ -5,8 +5,7 @@
 {% block content %}
 
     <div class="groups-grid">
-
-
+    <h3 class="title is-4">Gallery | {{ gallery.name }}</h3>
         <div class="dashboard-toolbar">
             <h2 class="title is-3">{{ gallery.event.title }}</h2>
             <div class="actions">
@@ -18,7 +17,6 @@
                 </div>
             </div>
         </div>
-        <h1 class="subtitle is-4">Gallery | {{ gallery.name }}</h1>
         <div class="columns is-multiline mt-4">
             {% for image in gallery_images %}
                 <div class="column is-4">
