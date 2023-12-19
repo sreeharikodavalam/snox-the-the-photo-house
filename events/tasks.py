@@ -1,11 +1,11 @@
 from celery import shared_task
+from snoxpro.celery import app
 from django.utils import timezone
 
-from app.models import FaceDetectionJob
 
-
-@shared_task
+@app.task
 def face_detection_jobs():
+    from core.models import FaceDetectionJob
     FaceDetectionJob.objects.create(updated_time=timezone.now())
 
 

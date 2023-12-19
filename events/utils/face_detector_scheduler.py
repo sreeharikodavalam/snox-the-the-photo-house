@@ -1,6 +1,6 @@
 from django.utils import timezone
 
-from app.models import FaceDetectionJob
+from core.models import FaceDetectionJob
 
 
 def face_detector_scheduler_yy():

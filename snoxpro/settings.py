@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
-    'app.apps.AppConfig',
+    'core',
     'authentication',
     'events',
     'whatsapp'
@@ -140,15 +140,7 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'public/media'
 
 # Celery configuration
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
-CELERY_BEAT_SCHEDULE = {
-    'your-periodic-task': {
-        'task': 'snoxpro.tasks.face_detection_jobs',
-        'schedule': 10.0,  # every 10 seconds
-    },
-}
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
