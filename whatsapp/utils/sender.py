@@ -22,8 +22,7 @@ def send_images_to_user(user_selfie: UserSelfieRegistration, gallery_image_list)
 def send_single_image_to_user(user: UserSelfieRegistration, image: GalleryImage, send_once=None):
     if send_once is None:
         send_once = is_send_first_image(f"91{user.mobile_number}")
-    # image_url = f"{BASE_URL}{image.album_cover.url}"
-    image_url = "https://app.snoxpro.com/media/events/gallery/collection/1/1_7553cfa6-e9ff-4fec-ac7d-bc041281a1eb_IMG_6783.jpg"
+    image_url = f"{BASE_URL}{image.album_cover.url}"
     print(f"Mobile:{user.mobile_number} | ID:{image.pk} | URL:{image_url}")
     if send_once is False:
         send_first_image(f"91{user.mobile_number}", image_url, gallery_image=image)
