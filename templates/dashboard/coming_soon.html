@@ -1,5 +1,5 @@
 {% extends 'includes/base.html' %}
-
+{% load static %}
 {% block title %}Snox | The Photo House{% endblock %}
 
 {% block content %}
@@ -8,8 +8,8 @@
     <div id="page-placeholder" class="container">
         <div class="page-placeholder">
             <div class="placeholder-content">
-                <img class="light-image" src="img/comingsoon.svg" alt="" />
-                <img class="dark-image" src="img/comingsoon.svg" alt="" />
+                <img class="light-image" src="{% static 'img/comingsoon.svg' %}" alt="" />
+                <img class="dark-image" src="{% static 'img/comingsoon.svg' %}" alt="" />
                 <h3>Coming Soon</h3>
                 <p class="is-large">
                     This page is currently under deveopment. Stay tuned.
