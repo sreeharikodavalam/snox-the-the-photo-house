@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class EventType(models.Model):
@@ -28,6 +29,15 @@ class Event(models.Model):
     venue = models.CharField(max_length=64, default='')
     note = models.CharField(max_length=512, default='')
     cover_image = models.ImageField(upload_to='events/cover', default='')
+    created_at = models.DateTimeField(default=timezone.now, editable=True)
+    updated_at = models.DateTimeField(default=timezone.now, editable=True)
+
+    def save(self, *args, **kwargs):
+        if self.created_at is None:
+            self.created_at = timezone.now()
+        else:
+            self.updated_at = timezone.now()
+        super().save(*args, **kwargs)
 
     def title(self):
         return f"{self.groom_name} {self.event_type.separation} {self.bride_name}"
@@ -53,7 +63,7 @@ class Gallery(models.Model):
 class GalleryImage(models.Model):
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE)
     album_cover = models.ImageField(upload_to='events/gallery/collection')
-    uploaded_time = models.DateTimeField(null=True)
+    uploaded_time = models.DateTimeField(null=True, blank=True, editable=True)
     is_processing = models.BooleanField(default=False)
     is_processed = models.BooleanField(default=False)
 
@@ -76,13 +86,19 @@ class CroppedGalleryFace(models.Model):
 
 
 class UserSelfieRegistration(models.Model):
-    # event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user_name = models.CharField(max_length=128)
     mobile_number = models.CharField(max_length=24)
     email_id = models.CharField(max_length=256, default=None, blank=True, null=True)
     selfie_image = models.ImageField(upload_to='user_selfies')
     selfie_embedding = models.JSONField(default=None, blank=True, null=True)
-    last_matching = models.DateTimeField()
+    last_matching = models.DateTimeField(null=True, blank=True, editable=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=True)
+
+    def save(self, *args, **kwargs):
+        if self.created_at is None:
+            self.created_at = timezone.now()
+        super().save(*args, **kwargs)
 
     class Meta:
         db_table = 'event_user_selfie_registration'

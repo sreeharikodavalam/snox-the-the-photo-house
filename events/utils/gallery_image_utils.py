@@ -43,7 +43,7 @@ def detect_and_crop_faces(gallery_image, padding_percentage=8):
         face_embedding = ",".join(map(str, face_encoding))
 
         # Save cropped face and its embedding in the database
-        CroppedGalleryFace.objects.create(album_id=gallery_image.pk, image=media_directory + face_file_name, face_embedding=face_embedding)
+        CroppedGalleryFace.objects.create(gallery_image=gallery_image, image=media_directory + face_file_name, face_embedding=face_embedding)
 
     return True
 

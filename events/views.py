@@ -103,9 +103,8 @@ def upload_gallery_image_process(request, gallery_id=None):
         # Uploading and do necessary resizing file
         uploaded_files = do_upload_gallery_image(files, gallery_id)
         for uploaded_file in uploaded_files:
-            # save model
+            # crete & save model
             gallery_image = GalleryImage.objects.create(gallery=gallery, album_cover=uploaded_file, uploaded_time=timezone.now())
-            gallery_image.save()
             # run face recognition utils
             detect_and_crop_faces(gallery_image)
         return JsonResponse({'message': 'Files uploaded successfully!', 'filenames': uploaded_files})
@@ -134,6 +133,7 @@ def selfie_register(request, event_id=None):
                 # Get face embedding from the image
                 face_embedding = get_face_embedding(data.read())
                 if face_embedding:
+                    form.instance.event = event
                     selfie_temp_data = form.save()
                     pk = selfie_temp_data.pk
                     selfie_temp_data.selfie_embedding = ",".join(map(str, face_embedding))

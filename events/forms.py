@@ -25,9 +25,10 @@ class EventForm(forms.ModelForm):
 class UserSelfieRegistrationForm(forms.ModelForm):
     class Meta:
         model = UserSelfieRegistration
-        fields = ['user_name', 'email_id', 'mobile_number', 'selfie_image', 'selfie_embedding']
+        fields = ['user_name', 'email_id', 'mobile_number', 'selfie_image', 'selfie_embedding', 'event']
 
     def __init__(self, *args, **kwargs):
         super(UserSelfieRegistrationForm, self).__init__(*args, **kwargs)
         self.fields['selfie_image'].required = False
         self.fields['selfie_embedding'].required = False
+        self.fields['event'].required = False
