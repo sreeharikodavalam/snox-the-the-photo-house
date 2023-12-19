@@ -17,7 +17,7 @@ def do_upload_gallery_image(files, gallery_id):
 
     for file_data in files:
         img = Image.open(file_data)
-        unique_filename = str(gallery_id) + '_' + str(uuid.uuid4()) + '_' + file_data.name
+        unique_filename = "snox-" + str(uuid.uuid4()) + "-" + str(gallery_id) + ".jpg"
         original_filepath = os.path.join(MEDIA_ROOT, upload_directory, unique_filename)
         media_file_path = upload_directory + unique_filename
 
