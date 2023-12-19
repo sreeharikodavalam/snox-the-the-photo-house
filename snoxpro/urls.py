@@ -5,7 +5,7 @@ from snoxpro import settings
 from events.views import selfie_register
 
 urlpatterns = [
-    path('', include('app.urls')),
+    path('', include('core.urls')),
     path('admin/', admin.site.urls),
     path('authentication/', include('authentication.urls')),
     path('events/', include('events.urls')),
