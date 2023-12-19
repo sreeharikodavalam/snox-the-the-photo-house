@@ -6,6 +6,10 @@ __pycache__
 db.sqlite3
 media
 
+#Exclude all migration files
+**/migrations/
+
+
 # Backup files #
 *.bak
 
