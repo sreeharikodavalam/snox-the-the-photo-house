@@ -1,14 +1,13 @@
 import uuid
-
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
-
 from whatsapp.utils.send_welcome_message import send_welcome_message
 from .forms import EventForm, UserSelfieRegistrationForm
 from .models import Event, Gallery, GalleryImage, UserSelfieRegistration
+from .utils.face_detector import match_selfies_and_send
 from .utils.gallery_upload_utils import do_upload_gallery_image
 from .utils.gallery_image_utils import detect_and_crop_faces, get_face_embedding
 import base64
@@ -140,6 +139,7 @@ def selfie_register(request, event_id=None):
                     selfie_temp_data.save()
                     selfie_registration = UserSelfieRegistration.objects.get(pk=pk)
                     send_welcome_message(f'91{selfie_registration.mobile_number}', selfie_registration.user_name, event_name=f'The Wedding of {str(event)}')
+                    match_selfies_and_send(selfie_registration.pk)
                     return render(request, 'events/selfie_register_result.html', {'event': event, 'selfie_registration': selfie_registration})
 
         return JsonResponse({'error': 'Can find your face in image'})

@@ -31,13 +31,15 @@ def send_additional_image(mobile_number, image_url, gallery_image):
                 }
             ]
     }
-
     headers = {
         'Authorization': INFOBIP_API_KEY,
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     }
 
-    response = requests.post(INFOBIP_BASE_URL + "/whatsapp/1/message/template", json=payload, headers=headers)
-    # print(response.json())
+    try:
+        response = requests.post(INFOBIP_BASE_URL + "/whatsapp/1/message/template", json=payload, headers=headers)
+        print(response.json())
+    except Exception as e:
+        print(f"Whatsapp send error {e}")
     WhatsappLogSharedPhoto.objects.create(mobile_number=mobile_number, gallery_image=gallery_image, send_time=timezone.now())

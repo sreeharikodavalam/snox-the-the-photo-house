@@ -39,6 +39,9 @@ def send_first_image(mobile_number, image_url, gallery_image):
         'Accept': 'application/json'
     }
 
-    response = requests.post(INFOBIP_BASE_URL + "/whatsapp/1/message/template", json=payload, headers=headers)
-    # print(response.json())
     WhatsappLogSharedPhoto.objects.create(mobile_number=mobile_number, send_time=timezone.now(), gallery_image=gallery_image)
+    try:
+        response = requests.post(INFOBIP_BASE_URL + "/whatsapp/1/message/template", json=payload, headers=headers)
+        print(response.json())
+    except Exception as e:
+        print(f"Whatsapp send error {e}")

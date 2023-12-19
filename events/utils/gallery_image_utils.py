@@ -6,6 +6,7 @@ import numpy as np
 from PIL import Image
 
 from events.models import CroppedGalleryFace
+from events.utils.face_detector import match_new_image_and_send
 from snoxpro import settings
 
 
@@ -43,7 +44,8 @@ def detect_and_crop_faces(gallery_image, padding_percentage=8):
         face_embedding = ",".join(map(str, face_encoding))
 
         # Save cropped face and its embedding in the database
-        CroppedGalleryFace.objects.create(gallery_image=gallery_image, image=media_directory + face_file_name, face_embedding=face_embedding)
+        saved_face = CroppedGalleryFace.objects.create(gallery_image=gallery_image, image=media_directory + face_file_name, face_embedding=face_embedding)
+        match_new_image_and_send(face=saved_face, image=gallery_image)
 
     return True
 

@@ -11,3 +11,6 @@ def is_image_send(mobile_number, gallery_image):
         gallery_image=gallery_image
     ).exists()
 
+
+def is_send_first_image(mobile_number):
+    return WhatsappLogSharedPhoto.objects.filter(mobile_number=mobile_number).exists()

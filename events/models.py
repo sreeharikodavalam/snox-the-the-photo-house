@@ -68,7 +68,7 @@ class GalleryImage(models.Model):
     is_processed = models.BooleanField(default=False)
 
     def get_faces(self):
-        return CroppedGalleryFace.objects.filter(album=self.pk)
+        return CroppedGalleryFace.objects.filter(gallery_image=self.pk)
 
     class Meta:
         db_table = 'event_gallery_image'
