@@ -74,7 +74,7 @@
             <div class="meta mt-3">
                 {% if user.is_authenticated %}
                     <span>{{ user.get_full_name }}</span>
-                    <span>{{ user.userprofile.designation.name }}</span>
+                    <span>{{ user.userprofile.business.business_type }}</span>
                 {% else %}
                     <span>Welcome</span>
                     <span>Welcome, guest!</span>

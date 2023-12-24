@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import User, UserProfile, UserDesignation
+from .models import UserProfile, UserBusinessType, UserBusiness
 
 admin.site.register(UserProfile)
-admin.site.register(UserDesignation)
+admin.site.register(UserBusinessType)
+admin.site.register(UserBusiness)

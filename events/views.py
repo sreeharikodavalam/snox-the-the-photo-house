@@ -91,8 +91,8 @@ def upload_gallery_image(request, gallery_id=None):
     return render(request, 'events/upload_gallery_images.html', {'gallery': gallery})
 
 
-@login_required
 @csrf_exempt
+@login_required
 def upload_gallery_image_process(request, gallery_id=None):
     gallery = get_object_or_404(Gallery, pk=gallery_id)
     if request.method == 'POST':
@@ -100,7 +100,7 @@ def upload_gallery_image_process(request, gallery_id=None):
         if not files:
             return JsonResponse({'error': 'No files provided'})
         # Uploading and do necessary resizing file
-        uploaded_files = do_upload_gallery_image(files, gallery_id)
+        uploaded_files = do_upload_gallery_image(files, gallery_id, request.user)
         for uploaded_file in uploaded_files:
             # crete & save model
             gallery_image = GalleryImage.objects.create(gallery=gallery, album_cover=uploaded_file, uploaded_time=timezone.now())
