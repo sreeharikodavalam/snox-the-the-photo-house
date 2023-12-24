@@ -7,7 +7,7 @@ from whatsapp.models import WhatsappLogSharedPhoto
 
 @login_required
 def dashboard(request):
-    events = Event.objects.objects.filter(user=request.user).order_by('-pk')[:3]
+    events = Event.objects.filter(user=request.user).order_by('-pk')[:3]
     report = {
         'event_count': Event.objects.filter(user=request.user).count(),
         'gallery_count': Gallery.objects.filter(event__user=request.user).count(),
