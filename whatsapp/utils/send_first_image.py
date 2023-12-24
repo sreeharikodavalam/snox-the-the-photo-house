@@ -2,19 +2,20 @@ import requests
 from django.utils import timezone
 
 from events.models import GalleryImage
-from whatsapp.contants import INFOBIP_API_KEY, INFOBIP_BASE_URL, INFOBIP_SENDER
+from whatsapp.contants import INFOBIP_API_KEY, INFOBIP_BASE_URL
 from whatsapp.models import WhatsappLogSharedPhoto
-from .whatsapp_utils import is_image_send
+from .whatsapp_utils import is_image_send, get_sender_number
 
 
 def send_first_image(mobile_number, image_url, gallery_image):
-    if is_image_send(mobile_number, gallery_image=gallery_image):
+    sender_number = get_sender_number(mobile_number)
+    if is_image_send(mobile_number, gallery_image=gallery_image) or sender_number is None:
         return
     payload = {
         "messages":
             [
                 {
-                    "from": INFOBIP_SENDER,
+                    "from": sender_number,
                     "to": mobile_number,
                     "content": {
                         "templateName": "first_image_delivery",
