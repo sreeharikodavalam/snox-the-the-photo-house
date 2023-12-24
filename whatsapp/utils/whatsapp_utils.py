@@ -24,7 +24,6 @@ def get_sender_number(mobile_number):
         mobile_number=mobile_number,
         send_time__gte=twenty_four_hours_ago
     ).first()
-    print(f"Last message by number : {last_message.mobile_number}")
     if last_message and last_message.sender:
         return last_message.sender.sender_number
     else:

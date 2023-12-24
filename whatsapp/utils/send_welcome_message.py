@@ -11,9 +11,7 @@ def send_welcome_message(mobile_number, user_name, event_name):
     print(user_name)
     print(event_name)
     sender_number = get_sender_number(mobile_number)
-    print(f"sender - number : {sender_number}")
-    # if is_welcome_message_send(mobile_number) or sender_number is None:
-    if sender_number is None:
+    if is_welcome_message_send(mobile_number) or sender_number is None:
         return
     payload = {
         "messages":
