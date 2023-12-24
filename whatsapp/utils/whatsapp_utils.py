@@ -33,6 +33,6 @@ def get_sender_number(mobile_number):
                 sender=sender,
                 send_time__gte=twenty_four_hours_ago
             ).count()
-            if count < 245 or count is None:
+            if count < 1 or count is None:
                 return sender.sender_number
     return None
