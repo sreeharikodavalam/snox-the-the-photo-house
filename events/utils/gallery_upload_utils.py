@@ -9,8 +9,8 @@ from snoxpro.settings import MEDIA_ROOT
 
 
 def do_upload_gallery_image(files, gallery_id, user):
-    max_width = 2000
-    max_height = 2000
+    max_width = 4000
+    max_height = 4000
 
     upload_directory = 'events/gallery/collection/' + str(gallery_id) + "/"
     os.makedirs(os.path.dirname(os.path.join(MEDIA_ROOT, upload_directory)), exist_ok=True)
