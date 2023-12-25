@@ -55,7 +55,7 @@ def list_events(request):
 @login_required
 def list_galleries(request, event_id=None):
     event = get_object_or_404(Event, pk=event_id, user=request.user)
-    galleries = Gallery.objects.filter(event=event_id)
+    galleries = Gallery.objects.filter(event=event_id)[:25]
     return render(request, 'events/list_gallery.html', {'galleries': galleries, 'event': event})
 
 
