@@ -55,7 +55,7 @@ def list_events(request):
 @login_required
 def list_galleries(request, event_id=None):
     event = get_object_or_404(Event, pk=event_id, user=request.user)
-    galleries = Gallery.objects.filter(event=event_id)[:25]
+    galleries = Gallery.objects.filter(event=event_id)
     return render(request, 'events/list_gallery.html', {'galleries': galleries, 'event': event})
 
 
@@ -81,7 +81,7 @@ def create_gallery(request, event_id=None):
 @login_required
 def list_gallery_images(request, gallery_id=None):
     gallery = get_object_or_404(Gallery, pk=gallery_id)
-    gallery_images = GalleryImage.objects.filter(gallery=gallery)
+    gallery_images = GalleryImage.objects.filter(gallery=gallery)[:25]
     return render(request, 'events/list_gallery_images.html', {'gallery': gallery, 'gallery_images': gallery_images})
 
 
