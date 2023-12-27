@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
+
+import events.utils.gallery_upload_utils
 from whatsapp.utils.send_welcome_message import send_welcome_message
 from .forms import EventForm, UserSelfieRegistrationForm
 from .models import Event, Gallery, GalleryImage, UserSelfieRegistration
@@ -81,7 +83,8 @@ def create_gallery(request, event_id=None):
 @login_required
 def list_gallery_images(request, gallery_id=None):
     gallery = get_object_or_404(Gallery, pk=gallery_id)
-    gallery_images = GalleryImage.objects.filter(gallery=gallery)[:25]
+    gallery_images = GalleryImage.objects.filter(gallery=gallery)#.select_related('gallery')
+    # events.utils.gallery_upload_utils.fix_gallery_thumbnails(gallery_images)
     return render(request, 'events/list_gallery_images.html', {'gallery': gallery, 'gallery_images': gallery_images})
 
 
@@ -100,13 +103,13 @@ def upload_gallery_image_process(request, gallery_id=None):
         if not files:
             return JsonResponse({'error': 'No files provided'})
         # Uploading and do necessary resizing file
-        uploaded_files = do_upload_gallery_image(files, gallery_id, request.user)
-        for uploaded_file in uploaded_files:
+        upload_result = do_upload_gallery_image(files, gallery_id, request.user)
+        for uploaded_files in upload_result:
             # crete & save model
-            gallery_image = GalleryImage.objects.create(gallery=gallery, album_cover=uploaded_file, uploaded_time=timezone.now())
+            gallery_image = GalleryImage.objects.create(gallery=gallery, image=uploaded_files['image'], image_thumbnail=uploaded_files['thumbnail'], uploaded_time=timezone.now())
             # run face recognition utils
             detect_and_crop_faces(gallery_image)
-        return JsonResponse({'message': 'Files uploaded successfully!', 'filenames': uploaded_files})
+        return JsonResponse({'message': 'Files uploaded successfully!', 'filenames': upload_result})
     else:
         return JsonResponse({'error': 'Invalid request method'})
 

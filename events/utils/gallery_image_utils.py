@@ -11,7 +11,7 @@ from snoxpro import settings
 
 
 def detect_and_crop_faces(gallery_image, padding_percentage=8):
-    image_path = gallery_image.album_cover.path
+    image_path = gallery_image.image.path
 
     # Load the image using face_recognition library
     image = face_recognition.load_image_file(image_path)

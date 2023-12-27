@@ -62,7 +62,8 @@ class Gallery(models.Model):
 
 class GalleryImage(models.Model):
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE)
-    album_cover = models.ImageField(upload_to='events/gallery/collection')
+    image = models.ImageField(upload_to='events/gallery/collection')
+    image_thumbnail = models.ImageField(upload_to='events/gallery/collection', null=True, default=None)
     uploaded_time = models.DateTimeField(null=True, blank=True, editable=True)
     is_processing = models.BooleanField(default=False)
     is_processed = models.BooleanField(default=False)

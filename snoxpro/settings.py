@@ -16,7 +16,7 @@ BASE_URL = os.getenv('BASE_URL')
 SECRET_KEY = 'django-insecure-syzpxbug53-vi)53$qbq66grlx!ue^)%gjlj9zw+6l^!j%pk5m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DEBUG') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
@@ -73,10 +73,21 @@ WSGI_APPLICATION = 'snoxpro.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('PG_DB'),
+        'USER': os.getenv('PG_USER'),
+        'PASSWORD': os.getenv('PG_PASSWORD'),
+        'HOST': os.getenv('PG_HOST'),
+        'PORT': os.getenv('PG_PORT'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Use the built-in authentication backend
 AUTHENTICATION_BACKENDS = [
@@ -141,3 +152,17 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'public/media'
+
+# debug toolbar
+if DEBUG:
+    def show_toolbar(request):
+        return True
+
+
+    INSTALLED_APPS += ["debug_toolbar"]
+
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+    }
+
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]

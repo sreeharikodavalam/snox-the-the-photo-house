@@ -5,7 +5,7 @@
 {% block content %}
 
     <div class="groups-grid">
-    <h3 class="title is-4">Gallery | {{ gallery.name }}</h3>
+        <h3 class="title is-4">Gallery | {{ gallery.name }}</h3>
         <div class="dashboard-toolbar">
             <h2 class="title is-3">{{ gallery.event.title }}</h2>
             <div class="actions">
@@ -19,22 +19,16 @@
         </div>
         <div class="columns is-multiline mt-4">
             {% for image in gallery_images %}
-                <div class="column is-4">
-                    <div class="card post-feed-item">
+                <div class="column is-3">
+                    <div class="card post-feed-item ">
                         <div class="card-image">
-                            <figure class="image is-4by3">
-                                <a href="{{ image.album_cover.url }}" data-demo-href="{{ image.album_cover.url }}" data-fancybox data-caption="">
-                                    <img src="{{ image.album_cover.url }}" data-demo-src="{{ image.album_cover.url }}" alt=""/>
+                            <figure class="image is-1by1  custom-cover">
+                                <a href="{{ image.image.url }}" data-demo-href="{{ image.image.url }}" data-fancybox data-caption="">
+                                    <img src="{% if image.image_thumbnail %}{{ image.image_thumbnail.url }}{% else %}{{ image.image.url }}{% endif %}" alt="{{ image.image.name }}" loading="lazy"/>
                                 </a>
+
                             </figure>
                         </div>
-{#                        <div class="card-content">#}
-{#                            <div class="media">#}
-{#                                    {% for face in image.get_faces %}#}
-{#                                            <img src="{{ face.image.url }}"  width="25" height="25"  alt="">#}
-{#                                    {% endfor %}#}
-{#                            </div>#}
-{#                        </div>#}
                     </div>
                 </div>
 
