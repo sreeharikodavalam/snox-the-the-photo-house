@@ -1,0 +1,46 @@
+{% extends 'includes/base.html' %}
+
+{% block title %}Snox | Dashboard{% endblock %}
+
+{% block content %}
+    <div class="hero-body">
+        <div class="cover-bg card">
+            <div class="avatar">
+                <img id="user-avatar" class="avatar-image" src="{{ face.selfie_image.url }}" data-demo-src="{{ face.selfie_image.url }}" alt="">
+        <div class="has-text-centered">
+            <div class="column is-3">
+                <h3>{{ face.user_name }}</h3>
+                <p>{{ face.mobile_number }}</p>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    <div class="groups-grid">
+        <div class="columns is-multiline mt-4">
+            {% for shared_photo in shared_photos %}
+                <div class="column is-3">
+                    <div class="card post-feed-item ">
+                        <div class="card-image">
+                            <figure class="image is-1by1  custom-cover">
+                                <a href="{{ shared_photo.gallery_image.image.url }}" data-demo-href="{{ shared_photo.gallery_image.image.url }}" data-fancybox data-caption="">
+                                    <img src="
+
+
+
+
+                                            {% if shared_photo.gallery_image.image_thumbnail %}{{ shared_photo.gallery_image.image_thumbnail.url }}{% else %}{{ shared_photo.gallery_image.image.url }}{% endif %}"
+                                         alt="{{ shared_photo.gallery_image.image.name }}"
+                                         loading="lazy"/>
+                                </a>
+
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

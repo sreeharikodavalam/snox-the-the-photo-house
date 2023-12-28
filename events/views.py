@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
+
+from whatsapp.models import WhatsappLogSharedPhoto
 from whatsapp.utils.send_welcome_message import send_welcome_message
 from .forms import EventForm, UserSelfieRegistrationForm
 from .models import Event, Gallery, GalleryImage, UserSelfieRegistration
@@ -151,4 +153,12 @@ def selfie_register(request, event_id=None):
 def face_registration_list(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     faces = UserSelfieRegistration.objects.filter(event=event)
-    return render(request, 'events/list_face_registrations.html', {'faces': faces})
+    return render(request, 'events/list_face_registrations.html', {'faces': faces, 'event': event})
+
+
+def distributed_image_list(request, event_id, mobile_number):
+    event = get_object_or_404(Event, pk=event_id)
+    face = UserSelfieRegistration.objects.filter(mobile_number=mobile_number).first()
+    shared_photos = WhatsappLogSharedPhoto.objects.filter(mobile_number=f"91{mobile_number}")
+    # gallery_images = GalleryImage.objects.filter(id__in=[entry.gallery_image. for entry in log_entries])
+    return render(request, 'events/list_distributed_gallery_images.html', {'face': face, 'shared_photos': shared_photos, 'event': event})

@@ -129,18 +129,22 @@
     <!-- Container -->
     <div id="posts-feed" class="container" data-open-sidebar data-page-title="Dashboard">
         <div class="toolbar-v1 is-narrow">
+            {% if request.META.HTTP_REFERER %}
+                <a class="mr-4 mt-1" href="{{ request.META.HTTP_REFERER }}"><i data-feather="arrow-left"></i></a>
+            {% else %}
+                <button onclick="goBack()">Go Back</button>
+
+                <script>
+                    function goBack() {
+                        window.history.back();
+                    }
+                </script>
+            {% endif %}
+
+
+            </button>
             <!-- Sidebar Trigger -->
-            <div class="friendkit-hamburger sidebar-v1-trigger">
-                    <span class="menu-toggle has-chevron">
-                        <span class="icon-box-toggle">
-                            <span class="rotate">
-                                <i class="icon-line-top"></i>
-                                <i class="icon-line-center"></i>
-                                <i class="icon-line-bottom"></i>
-                            </span>
-                        </span>
-                    </span>
-            </div>
+
             <h1>Dashboard</h1>
             <div class="controls">
 
