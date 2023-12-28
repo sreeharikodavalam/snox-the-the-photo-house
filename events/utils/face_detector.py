@@ -46,5 +46,4 @@ def parse_face_encodings(string_value):
 
 def match_face_encodings(known_encoding, comparing_encoding, threshold=0.4):
     result = face_recognition.compare_faces(known_encoding, comparing_encoding, threshold)
-    print(f"Compare face result : {result}")
     return result[0]
