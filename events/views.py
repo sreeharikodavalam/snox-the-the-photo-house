@@ -4,8 +4,6 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
-
-import events.utils.gallery_upload_utils
 from whatsapp.utils.send_welcome_message import send_welcome_message
 from .forms import EventForm, UserSelfieRegistrationForm
 from .models import Event, Gallery, GalleryImage, UserSelfieRegistration
@@ -83,8 +81,7 @@ def create_gallery(request, event_id=None):
 @login_required
 def list_gallery_images(request, gallery_id=None):
     gallery = get_object_or_404(Gallery, pk=gallery_id)
-    gallery_images = GalleryImage.objects.filter(gallery=gallery)#.select_related('gallery')
-    # events.utils.gallery_upload_utils.fix_gallery_thumbnails(gallery_images)
+    gallery_images = GalleryImage.objects.filter(gallery=gallery)
     return render(request, 'events/list_gallery_images.html', {'gallery': gallery, 'gallery_images': gallery_images})
 
 
@@ -149,3 +146,9 @@ def selfie_register(request, event_id=None):
     else:
         form = UserSelfieRegistrationForm()
         return render(request, 'events/selfie_register.html', {'event': event, 'form': form})
+
+
+def face_registration_list(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    faces = UserSelfieRegistration.objects.filter(event=event)
+    return render(request, 'events/list_face_registrations.html', {'faces': faces})

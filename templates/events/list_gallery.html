@@ -12,8 +12,13 @@
                 <div class="buttons">
                     {% if event %}
                         <a class="button is-solid primary-button is-raised has-icon" href="{% url 'create_gallery' event_id=event.id %}">
-                            <i data-feather=" plus"></i>
+                            <i data-feather="plus"></i>
                             <span>Create New Gallery</span>
+                        </a>
+
+                        <a class="button is-solid primary-button is-raised has-icon" href="{% url 'list_face_registrations' event_id=event.id %}">
+                            <i data-feather="eye"></i>
+                            <span>Whatsapp Registrations</span>
                         </a>
                     {% endif %}
                 </div>

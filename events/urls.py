@@ -11,4 +11,5 @@ urlpatterns = [
     path('gallery/images/upload_process/<int:gallery_id>/', upload_gallery_image_process, name='upload_gallery_image_process'),
     path('gallery/images/upload/<int:gallery_id>/', upload_gallery_image, name='upload_gallery_image'),
     path('gallery/images/<int:gallery_id>/', list_gallery_images, name='list_gallery_images'),
+    path('faces/list/<int:event_id>/', face_registration_list, name='list_face_registrations')
 ]
