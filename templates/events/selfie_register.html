@@ -102,6 +102,8 @@
 
                 <div class="hero-body">
                     <div class="form-wrapper">
+                        <img src="{% static 'img/frame-1.png' %}" alt="image"
+                             style="width: 100%;background-image: url('{{ event.cover_image.url }}');background-size: cover;background-repeat: no-repeat; margin: auto">
 
                         <div class="has-text-centered"><img src="{% static 'img/wedding.svg' %}" style="max-width: 80px;margin:auto"></div>
                         <h1 class="etitle wed has-text-centered">{{ event.groom_name }}
@@ -199,7 +201,7 @@
     </div>
 </div>
 
-<img id="capturedImage" style="display: none;" />
+<img id="capturedImage" style="display: none;"/>
 <div id="image-container"></div>
 
 
@@ -209,7 +211,15 @@
     document.getElementById("openmodal").addEventListener("click", openModal, false);
     document.getElementById("closemodal").addEventListener("click", closeModal, false);
 
+    //------------------------
+
     function openModal() {
+        // Ensure user interaction
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            alert("getUserMedia is not supported in this browser.");
+            return;
+        }
+
         const name = document.getElementById('inputName').value;
         const number = document.getElementById('inputNumber').value;
         var checkbox = document.getElementById('agreeCheckbox').checked;
@@ -218,23 +228,24 @@
             alert("Please enter your name.");
             return;
         }
+
         if (number.trim().length !== 10) {
             alert("Please enter your 10-digit mobile number.");
             return;
         }
+
         if (!checkbox) {
             alert("Please agree to our terms and conditions.");
             return;
         }
 
-        document.getElementById("selfiemodal").classList.add("is-active");
-
-        // Get access to the camera
-        navigator.mediaDevices.getUserMedia({ video: true })
+        // Trigger camera access on user interaction
+        navigator.mediaDevices.getUserMedia({video: true})
             .then(function (stream) {
                 var video = document.getElementById('video-preview');
                 video.srcObject = stream;
-                videoStream = stream;
+
+                document.getElementById("selfiemodal").classList.add("is-active");
 
                 // Capture selfie when the button is clicked
                 document.getElementById('capture-button').addEventListener('click', function () {
@@ -266,6 +277,9 @@
             });
     }
 
+
+    //------------------------
+
     function submitForm() {
         var form = document.getElementById('selfieForm');
         form.submit();
@@ -285,7 +299,6 @@
         }
     }
 </script>
-
 
 
 </body>

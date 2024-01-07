@@ -5,13 +5,15 @@ import face_recognition
 import numpy as np
 from PIL import Image
 
-from events.models import CroppedGalleryFace
+from events.models import CroppedGalleryFace, GalleryImage
+from events.utils.aws_utils import upload_to_s3
 from events.utils.face_detector import match_new_image_and_send
 from snoxpro import settings
 
 
-def detect_and_crop_faces(gallery_image, padding_percentage=8):
+def detect_and_crop_faces(gallery_image: GalleryImage, padding_percentage=8):
     image_path = gallery_image.image.path
+    # Upload to aws s3
 
     # Load the image using face_recognition library
     image = face_recognition.load_image_file(image_path)

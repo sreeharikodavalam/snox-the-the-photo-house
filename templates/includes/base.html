@@ -132,8 +132,7 @@
             {% if request.META.HTTP_REFERER %}
                 <a class="mr-4 mt-1" href="{{ request.META.HTTP_REFERER }}"><i data-feather="arrow-left"></i></a>
             {% else %}
-                <button onclick="goBack()">Go Back</button>
-
+                <a class="mr-4 mt-1" onclick="goBack();"><i data-feather="arrow-left"></i></a>
                 <script>
                     function goBack() {
                         window.history.back();

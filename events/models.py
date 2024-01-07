@@ -67,6 +67,7 @@ class GalleryImage(models.Model):
     uploaded_time = models.DateTimeField(null=True, blank=True, editable=True)
     is_processing = models.BooleanField(default=False)
     is_processed = models.BooleanField(default=False)
+    is_uploaded_to_s3 = models.BooleanField(default=False)
 
     def get_faces(self):
         return CroppedGalleryFace.objects.filter(gallery_image=self.pk)
