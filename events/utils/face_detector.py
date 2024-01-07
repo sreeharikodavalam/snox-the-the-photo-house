@@ -45,13 +45,18 @@ def parse_face_encodings(string_value):
 
 
 def match_face_encodings(known_encoding, comparing_encoding, threshold=0.4):
-    if not known_encoding or not comparing_encoding:
+    if  known_encoding is None or  comparing_encoding is None:
         return False
     # Compare face encodings
     result = face_recognition.compare_faces(known_encoding, comparing_encoding, tolerance=0.5)
+    if result is None or result[0] is None:
+        return False
 
+    distance = face_recognition.face_distance(known_encoding, comparing_encoding)
+    if distance is None or distance[0] is None:
+        return False
     # Additional checks
-    if result and face_recognition.face_distance(known_encoding, comparing_encoding)[0] < threshold:
+    if result and distance < threshold:
         return True
     else:
         return False
