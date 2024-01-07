@@ -1,4 +1,4 @@
-from snoxpro.settings import BASE_URL
+from snoxpro.settings import BASE_URL, DEBUG
 from .whatsapp_utils import is_send_first_image
 from .send_first_image import send_first_image
 from .send_additional_image import send_additional_image
@@ -24,6 +24,8 @@ def send_single_image_to_user(user: UserSelfieRegistration, image: GalleryImage,
         send_once = is_send_first_image(f"91{user.mobile_number}")
     image_url = f"{BASE_URL}{image.image.url}"
     print(f"Mobile:{user.mobile_number} | ID:{image.pk} | URL:{image_url}")
+    if DEBUG:
+        return
     if send_once is False:
         send_first_image(f"91{user.mobile_number}", image_url, gallery_image=image)
     else:
