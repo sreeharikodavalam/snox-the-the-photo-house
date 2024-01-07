@@ -212,7 +212,7 @@
     document.getElementById("closemodal").addEventListener("click", closeModal, false);
 
     //------------------------
-
+    let videoStream;
     function openModal() {
         // Ensure user interaction
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -244,7 +244,7 @@
             .then(function (stream) {
                 var video = document.getElementById('video-preview');
                 video.srcObject = stream;
-
+                videoStream = stream;
                 document.getElementById("selfiemodal").classList.add("is-active");
 
                 // Capture selfie when the button is clicked
