@@ -142,7 +142,7 @@ def selfie_register(request, event_id=None):
                     selfie_temp_data.save()
                     selfie_registration = UserSelfieRegistration.objects.get(pk=pk)
                     image_url = f"{BASE_URL}{event.cover_image.url}"
-                    send_welcome_message(f'91{selfie_registration.mobile_number}', selfie_registration.user_name, event_name=f'The Wedding of {str(event)}', image_url=im)
+                    send_welcome_message(f'91{selfie_registration.mobile_number}', selfie_registration.user_name, event_name=f'The Wedding of {str(event)}', image_url=image_url)
                     match_selfies_and_send(selfie_registration.pk)
                     return render(request, 'events/selfie_register_result.html', {'event': event, 'selfie_registration': selfie_registration})
 
