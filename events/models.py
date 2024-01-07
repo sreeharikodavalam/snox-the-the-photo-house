@@ -102,5 +102,8 @@ class UserSelfieRegistration(models.Model):
             self.created_at = timezone.now()
         super().save(*args, **kwargs)
 
+    def __str__(self):
+        return f'{self.mobile_number} - {self.user_name}'
+
     class Meta:
         db_table = 'event_user_selfie_registration'

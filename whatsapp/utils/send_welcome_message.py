@@ -1,15 +1,15 @@
-
 import requests
 from django.utils import timezone
 
 from whatsapp.contants import INFOBIP_API_KEY, INFOBIP_BASE_URL
-from whatsapp.models import WhatsappLogWelcomeMessage,WhatsappSender
+from whatsapp.models import WhatsappLogWelcomeMessage, WhatsappSender
 from .whatsapp_utils import is_welcome_message_send, get_sender_number
 
 
-def send_welcome_message(mobile_number, user_name, event_name):
+def send_welcome_message(mobile_number, user_name, event_name, image_url="https://app.snoxpro.com/static/img/logo.png"):
     print(user_name)
     print(event_name)
+    print(image_url)
     sender_number = get_sender_number(mobile_number)
     if is_welcome_message_send(mobile_number) or sender_number is None:
         return
@@ -27,7 +27,7 @@ def send_welcome_message(mobile_number, user_name, event_name):
                             },
                             "header": {
                                 "type": "IMAGE",
-                                "mediaUrl": "https://app.snoxpro.com/static/img/logo.png"
+                                "mediaUrl": image_url
                             },
                         },
                         "language": "en"
